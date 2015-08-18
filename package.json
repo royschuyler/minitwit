@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "eslint .",
     "start": "node index.js",
-    "test": "mocha app --recursive"
+    "test": "mocha app --recursive --compilers js:babel/register"
   },
   "repository": {
     "type": "git",
