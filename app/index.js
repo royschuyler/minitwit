@@ -3,6 +3,7 @@
 
 var express = require('express');
 var morgan = require('morgan');
+var sassCSS = require('node-sass-middleware');
 
 var routes = require('./routes');
 var database = require('../lib/mongo/');
@@ -14,6 +15,8 @@ app.set('views', __dirname);
 app.set('view engine', 'jade');
 
 app.locals.title = 'MiniTwit';
+
+app.use(sassCSS('www/stylesheets'));
 
 app.use(morgan('dev'));
 
