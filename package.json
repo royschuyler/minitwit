@@ -20,6 +20,7 @@
   "homepage": "https://github.com/NSS-Cohort-9/minitwit#readme",
   "dependencies": {
     "babel": "^5.8.21",
+    "body-parser": "^1.13.3",
     "errorhandler": "^1.4.2",
     "express": "^4.13.3",
     "jade": "^1.11.0",
