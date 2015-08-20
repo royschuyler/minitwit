@@ -20,7 +20,7 @@ app.use(sassCSS({
   dest: 'www/stylesheets',
   debug: true,
   outputStyle: 'compressed',
-  prefix: '/style'
+  prefix: '/styles'
 }));
 
 app.use(express.static('www'));
