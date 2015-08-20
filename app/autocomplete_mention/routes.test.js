@@ -16,8 +16,7 @@ describe('Autocomplete', function() {
       ];
       require('../../lib/mongo').connect(function(err,db) {
         db.collection('user').drop( // but clear collection first
-          function(err) {
-            if(err) throw err;
+          function() {
             db.collection('user').insert( users ,
               function(err) {
                 if(err) throw err;
