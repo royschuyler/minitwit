@@ -31,7 +31,7 @@ Post.dropCollection = function (cb) {
 
 //test this
 Post.delete = function (id, cb) {
-  Post.collection.update({_id: id}, {$set: { hidden : true}}, cb)
+  Post.collection.findOneAndUpdate({_id: id}, {$set: { hidden : true}}, {returnOriginal: false}, cb)
 }
 
 Post.findById = function (id, cb) {

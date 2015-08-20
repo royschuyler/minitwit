@@ -76,11 +76,19 @@ describe.only('Post', function () {
     })
   })
 
-  // describe('delete', function () {
-  //   it('should give a mongo document the hidden class', function (done) {
+  describe('delete', function () {
+    it('should give a mongo document the hidden class', function (done) {
+      var post = new Post({});
+      post.save(function (err, result) {
+        var id = result._id
+        Post.delete(id, function (err, result) {
+          expect(result.value.hidden).to.equal(true)
+          done();
+        })
+      })
 
-  //   } )
-  // })
+    })
+  })
 
 })
 
