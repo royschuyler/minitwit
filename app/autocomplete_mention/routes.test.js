@@ -12,13 +12,13 @@ describe('Autocomplete', function() {
       var users = [
         { name : 'world' },
         { name : 'work' },
-        { name : 'woman' },
+        { name : 'woman' }
       ];
       require('../../lib/mongo').connect(function(err,db) {
         db.collection('user').drop( // but clear collection first
-          function(err,result) {
+          function(err) {
             db.collection('user').insert( users ,
-              function(err,result) {
+              function(err) {
                 if(err) throw err;
                 done();
               });
@@ -72,7 +72,7 @@ describe('Autocomplete', function() {
     after(function(done) {
       require('../../lib/mongo').connect(function(err,db) {
         db.collection('user').drop(
-          function(err, result) {
+          function(err) {
             if(err) throw err;
             done();
           });

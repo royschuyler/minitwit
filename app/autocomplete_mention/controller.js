@@ -12,6 +12,6 @@ module.exports.mention = function mention(req,res) {
       name : 1 , _id : 0
     }).toArray(function(err,matches) {
       res.send(matches);
-    })
-  })
+    });
+  });
 };
