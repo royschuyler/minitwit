@@ -1,7 +1,7 @@
 // var mocha = require('mocha')
 var expect = require('chai').expect;
 
-var Post = require('../models/post.js');
+var Post = require('./post');
 var mongo = require('../../lib/mongo/');
 
 describe.only('Post', function () {
