@@ -28,11 +28,6 @@ Post.dropCollection = function (cb) {
   Post.collection.drop(cb);
 };
 
-//test this
-Post.delete = function (id, cb) {
-  Post.collection.findOneAndUpdate({_id: id}, {$set: { hidden : true}}, {returnOriginal: false}, cb);
-};
-
 Post.findById = function (id, cb) {
   Post.collection.findOne({_id: ObjectID(id)}, function (err, post) {
     // cb(err, post);
