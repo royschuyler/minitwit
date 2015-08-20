@@ -3,7 +3,8 @@
 var expect = require('chai').expect
   , request = require('supertest');
 
-var app = require('../../app');
+var app = require('../../app')
+  , database = require('../../lib/mongo');
 
 describe('Autocomplete', function() {
   describe('GET /mention', function() {
@@ -14,7 +15,7 @@ describe('Autocomplete', function() {
         { name : 'work' },
         { name : 'woman' }
       ];
-      require('../../lib/mongo').connect(function(err,db) {
+      database.connect(function(err,db) {
         db.collection('user').drop( // but clear collection first
           function() {
             db.collection('user').insert( users ,
@@ -58,19 +59,8 @@ describe('Autocomplete', function() {
       });
     });
 
-    it('should not have _id in response', function(done) {
-      request(app)   // seeking matches for worl
-        .get('/autocomplete/mention?pattern=worl')
-        .expect(200)
-        .end(function(err, res) {
-          if(err) return done(err);
-          expect(res.text).not.to.contain('_id');
-          done();
-        });
-    });
-
     after(function(done) {
-      require('../../lib/mongo').connect(function(err,db) {
+      database.connect(function(err,db) {
         db.collection('user').drop(
           function(err) {
             if(err) throw err;
