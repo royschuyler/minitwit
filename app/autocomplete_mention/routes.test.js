@@ -56,7 +56,7 @@ describe('Autocomplete', function() {
             {name: 'world'}, {name: 'work'}
           ]);
           done();
-      });
+        });
     });
 
     after(function(done) {
