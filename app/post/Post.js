@@ -7,12 +7,6 @@ var mongo = require('../../lib/mongo/');
 
 function Post(p) {
   this.text = p.text;
-  this.mention = p.mention;
-  this.username = p.username;
-  this.image = p.image;
-  this.date = new Date();
-  this.geolocation = p.geolocation;
-  this.hidden = false;
 }
 
 //this sets the collection property as a getter, so that every time it gets called it gets reset
