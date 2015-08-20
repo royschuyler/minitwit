@@ -23,30 +23,37 @@ describe('Mocha + Chai', function(){
 
 describe('deleting', function(){
   before(function(done){
-    var users = [{name : 'Greg'}, {name: 'Chad'}];
+    var users = [{name : 'Greg'}, {name : 'Chad'}];
     var message = {
       text : 'Hello World',
       username : 'Greg'
-    }
+    };
     database.connect(function(err,db){
-      db.collection('users').save(users, function(err){
-        db.collection('tweets').save(message, function(err){
-          done();
+      db.collection('users').drop(function(){
+        db.collection('users').insert(users, function(err){
+          db.collection('tweets').drop(function(){
+            db.collection('tweets').insert(message, function(err){
+              done();
+            });
+          })
         });
-      });
+      })
     })
   });
 
   //  delete test w/ authentication
   describe('POST /delete', function(){
     it('should respond with success', function(done){
+      database.connect(function(err, db){
+        db.collection('tweets').findOne({username : 'Greg'})
+      })
       request(app)
       .post('/delete/:id')
       .expect(200)
       .end(function (err, req, res) {
         if (err) throw err;
         console.log(req)
-        expect(req.session.user).to.be(true)
+        expect(req.session.user).to.be(true);
         expect(res.text).to.contain('Tweet deleted');
         done();
         });
