@@ -5,56 +5,63 @@ var Post = require('./post');
 var mongo = require('../../lib/mongo/');
 
 describe('Post', function () {
+  var seededPosts;
 
   before(function (done) {
-    mongo.connect(done);
+    mongo.connect(function () {
+      var seedPosts = [
+        {text: 'Foo'},
+        {text: 'Bar'}
+      ];
+
+      Post.collection.insertMany(seedPosts, function (err, result) {
+        seededPosts = result.ops;
+        done();
+      });
+    });
   });
 
-  afterEach(function (done) {
+  after(function (done) {
     Post.dropCollection(done);
   });
 
   describe('findById', function () {
-    var id = '55d4e64dc0102bc25450210e';
-    before(function () {
-      // create data
-      var post = new Post({});
-      post.save( function (err, post) {
-        id = post._id;
-      });
-    });
-
     it('should return a Post object', function (done) {
+      var id = seededPosts[0]._id;
 
       Post.findById(id, function (err, post) {
         expect(post).to.be.an.instanceOf(Post);
         done();
       });
     });
-    // obj.findById('55d4e64dc0102bc25450210e', function (err, post) {
-    //   db.find({_id : ObjectID('55d4e64dc0102bc25450210e')}, function (err, post) {
-    //     console.log(post)
-    //     console.log(post.text)
-    //     setPrototype(post.text).should.equal(result.text);
-    //     db.close()
-    //     done();
-    //   })
-    // })
-  });
-  describe('findAll', function () {
-    before(function () {
-      var id;
-      // create data
-      var post = new Post({});
-      post.save( function (err, post) {
-        id = post._id;
+
+    it('should return the specific post', function (done) {
+      var id1 = seededPosts[0]._id;
+      var id2 = seededPosts[1]._id;
+
+      Post.findById(id1, function (err, post) {
+        expect(post.text).to.equal('Foo');
+
+        Post.findById(id2, function (err, post) {
+          expect(post.text).to.equal('Bar');
+          done();
+        });
       });
     });
-    it('should return an array of Post objects', function (done) {
-      Post.findAll(function (err, postArray) {
-        postArray.forEach(function (post) {
+  });
+
+  describe('findAll', function () {
+    it('should return Post objects', function (done) {
+      Post.findAll(function (err, posts) {
+        posts.forEach(function (post) {
           expect(post).to.be.an.instanceOf(Post);
         });
+        done();
+      });
+    });
+    it('should return all posts', function (done) {
+      Post.findAll(function (err, posts) {
+        expect(posts).to.deep.equal(seededPosts);
         done();
       });
     });
@@ -63,10 +70,10 @@ describe('Post', function () {
   describe('.create()', function () {
     it('should add a post to the database', function (done) {
       Post.count(function (err, initialCount) {
-        expect(initialCount).to.equal(0);
-        Post.create({}, function (err, post) {
+        expect(initialCount).to.equal(2);
+        Post.create({}, function () {
           Post.count(function (err, newCount) {
-            expect(newCount).to.equal(1);
+            expect(newCount).to.equal(3);
             done();
           });
         });
@@ -74,12 +81,3 @@ describe('Post', function () {
     });
   });
 });
-
-
-
-
-
-
-
-
-
