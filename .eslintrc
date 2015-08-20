@@ -9,6 +9,7 @@ extends: eslint:recommended
 root: true
 
 rules:
+  quotes: [2, single, avoid-escape]
   semi: [2, always]
   strict: [2, global]
 ...
