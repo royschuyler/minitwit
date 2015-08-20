@@ -3,22 +3,9 @@
 var express = require('express');
 var router = express.Router();
 
-var Post = require("./Post");
+var ctrl = require('./controller');
 
-router.get('/', function (req, res) {
-  res.render('post/index');
-});
-
-router.post('/', function (req, res) {
-  var postObj = {
-    text : req.body.text
-  };
-  var post = new Post(postObj);
-  post.save(function (err, result) {
-    if (err) {throw err};
-    res.redirect('/');
-  });
-
-});
+router.get('/', ctrl.index);
+router.post('/', ctrl.create);
 
 module.exports = router;
