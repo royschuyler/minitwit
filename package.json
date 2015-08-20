@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint .",
-    "start": "node index.js",
+    "start": "node index.js --compilers js:babel/register",
     "test": "mocha app --recursive --compilers js:babel/register"
   },
   "repository": {

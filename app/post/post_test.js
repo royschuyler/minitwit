@@ -1,4 +1,4 @@
-// var mocha = require('mocha')
+'use strict';
 var expect = require('chai').expect;
 
 var Post = require('./post');
@@ -18,9 +18,9 @@ describe.only('Post', function () {
     var id = '55d4e64dc0102bc25450210e';
     before(function () {
       // create data
-      var post = new Post({})
+      var post = new Post({});
       post.save( function (err, post) {
-        id = post._id
+        id = post._id;
       });
     });
 
@@ -40,57 +40,55 @@ describe.only('Post', function () {
     //     done();
     //   })
     // })
-  })
+  });
   describe('findAll', function () {
-    var id = '55d4e64dc0102bc25450210e';
     before(function () {
+      var id;
       // create data
-      var post = new Post({})
+      var post = new Post({});
       post.save( function (err, post) {
-        id = post._id
+        id = post._id;
       });
     });
     it('should return an array of Post objects', function (done) {
       Post.findAll(function (err, postArray) {
         postArray.forEach(function (post) {
           expect(post).to.be.an.instanceOf(Post);
-        })
+        });
         done();
-      })
-    })
-  })
+      });
+    });
+  });
 
   describe('save', function () {
     it('should save an object to the database', function (done) {
       Post.collection.count(function (count) {
         var initialCount = count;
         // var id = '55d4e64dc0102bc25450210e';
-        var post = new Post({})
+        var post = new Post({});
         post.save(function (err, result) {
           Post.collection.count(function (err, result) {
             expect(result).to.equal(initialCount + 1);
             done();
-          })
-        })
-      })
-    })
-  })
+          });
+        });
+      });
+    });
+  });
 
   describe('delete', function () {
     it('should give a mongo document the hidden class', function (done) {
       var post = new Post({});
       post.save(function (err, result) {
-        var id = result._id
+        var id = result._id;
         Post.delete(id, function (err, result) {
-          expect(result.value.hidden).to.equal(true)
+          expect(result.value.hidden).to.equal(true);
           done();
-        })
-      })
-
-    })
-  })
-
-})
+        });
+      });
+    });
+  });
+});
 
 
 
