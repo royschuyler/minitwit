@@ -4,7 +4,7 @@ var expect = require('chai').expect;
 var Post = require('./post');
 var mongo = require('../../lib/mongo/');
 
-describe.only('Post', function () {
+describe('Post', function () {
 
   before(function (done) {
     mongo.connect(done);
