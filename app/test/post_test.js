@@ -62,15 +62,25 @@ describe.only('Post', function () {
 
   describe('save', function () {
     it('should save an object to the database', function (done) {
-      var id = '55d4e64dc0102bc25450210e';
-      var post = new Post({_id: id})
-      post.save(function (err, result) {
-        console.log(result)
-        expect(result._id).to.not.equal(id);
-        done();
+      Post.collection.count(function (count) {
+        var initialCount = count;
+        // var id = '55d4e64dc0102bc25450210e';
+        var post = new Post({})
+        post.save(function (err, result) {
+          Post.collection.count(function (err, result) {
+            expect(result).to.equal(initialCount + 1);
+            done();
+          })
+        })
       })
     })
   })
+
+  // describe('delete', function () {
+  //   it('should give a mongo document the hidden class', function (done) {
+
+  //   } )
+  // })
 
 })
 
