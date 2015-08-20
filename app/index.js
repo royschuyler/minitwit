@@ -20,7 +20,8 @@ app.use(express.static('www'));
 app.use(sass({
   src: 'www/styles',
   dest: 'www/styles',
-  outputStyle: 'compressed'
+  outputStyle: 'compressed',
+  sourceMap: app.get('env') === 'production' ? 'false' : true
 }));
 
 app.use(morgan('dev'));
