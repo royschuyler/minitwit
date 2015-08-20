@@ -16,9 +16,12 @@ Object.defineProperty(Post, 'collection', {
   }
 });
 
+Post.count = function (cb) {
+  return Post.collection.count(cb);
+};
 
-Post.prototype.save = function (cb) {
-  Post.collection.save(this, cb);
+Post.create = function (post, cb) {
+  Post.collection.insertOne(post, cb);
 };
 
 Post.dropCollection = function (cb) {

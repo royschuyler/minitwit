@@ -60,15 +60,13 @@ describe('Post', function () {
     });
   });
 
-  describe('save', function () {
-    it('should save an object to the database', function (done) {
-      Post.collection.count(function (count) {
-        var initialCount = count;
-        // var id = '55d4e64dc0102bc25450210e';
-        var post = new Post({});
-        post.save(function (err, result) {
-          Post.collection.count(function (err, result) {
-            expect(result).to.equal(initialCount + 1);
+  describe('.create()', function () {
+    it('should add a post to the database', function (done) {
+      Post.count(function (err, initialCount) {
+        expect(initialCount).to.equal(0);
+        Post.create({}, function (err, post) {
+          Post.count(function (err, newCount) {
+            expect(newCount).to.equal(1);
             done();
           });
         });
@@ -89,6 +87,7 @@ describe('Post', function () {
     });
   });
 });
+
 
 
 
