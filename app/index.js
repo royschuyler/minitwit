@@ -18,10 +18,11 @@ app.locals.title = 'MiniTwit';
 
 app.use(express.static('www'));
 app.use(sass({
-  src: 'www/styles',
   dest: 'www/styles',
   outputStyle: 'compressed',
-  sourceMap: app.get('env') === 'production' ? 'false' : true
+  prefix: '/styles',
+  sourceMap: app.get('env') === 'production' ? 'false' : true,
+  src: 'www/styles'
 }));
 
 app.use(morgan('dev'));
