@@ -5,6 +5,6 @@ var router = express.Router();
 
 var ctrl = require('./controller');
 
-router.post('/delete/:id', ctrl.delete_feature);
+router.post('/:id', ctrl.delete_feature);
 
 module.exports = router;
