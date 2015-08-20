@@ -16,11 +16,9 @@ app.set('view engine', 'jade');
 app.locals.title = 'MiniTwit';
 
 app.use(sassCSS({
-  src: 'www/stylesheets',
-  dest: 'www/stylesheets',
-  debug: true,
-  outputStyle: 'compressed',
-  prefix: '/styles'
+  src: 'www/styles',
+  dest: 'www/styles',
+  outputStyle: 'compressed'
 }));
 
 app.use(express.static('www'));
