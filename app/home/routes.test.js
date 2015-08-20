@@ -6,8 +6,8 @@ var request = require('supertest');
 var app = require('../../app/');
 
 describe('Home Routes', function () {
-  describe('GET /', function(){
-    it('respond with index', function(done){
+  describe('GET /', function () {
+    it('respond with index', function (done) {
       request(app)
         .get('/')
         .expect(200)
@@ -19,8 +19,8 @@ describe('Home Routes', function () {
     });
   });
 
-  describe('GET /contact', function(){
-    it('respond with contact', function(done){
+  describe('GET /contact', function () {
+    it('respond with contact', function (done) {
       request(app)
         .get('/contact')
         .expect(200)

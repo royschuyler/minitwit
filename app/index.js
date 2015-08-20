@@ -3,6 +3,7 @@
 
 var express = require('express');
 var morgan = require('morgan');
+var sass = require('node-sass-middleware');
 
 var routes = require('./routes');
 var posts = require('./post/post.routes');
@@ -16,6 +17,15 @@ app.set('views', __dirname);
 app.set('view engine', 'jade');
 
 app.locals.title = 'MiniTwit';
+
+app.use(express.static('www'));
+app.use(sass({
+  dest: 'www/styles',
+  outputStyle: 'compressed',
+  prefix: '/styles',
+  sourceMap: app.get('env') === 'production' ? 'false' : true,
+  src: 'www/styles'
+}));
 
 app.use(morgan('dev'));
 
