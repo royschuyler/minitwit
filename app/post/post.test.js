@@ -1,7 +1,7 @@
 'use strict';
 var expect = require('chai').expect;
 
-var Post = require('./post');
+var Post = require('./Post');
 var mongo = require('../../lib/mongo/');
 
 describe('Post', function () {
