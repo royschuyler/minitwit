@@ -1,13 +1,13 @@
 /* eslint-disable no-console */
 'use strict';
 
+var bodyParser = require('body-parser');
 var express = require('express');
 var morgan = require('morgan');
 var sass = require('node-sass-middleware');
 
 var routes = require('./routes');
 var database = require('../lib/mongo/');
-var bodyParser = require('body-parser');
 
 var app = module.exports = express();
 
@@ -17,6 +17,8 @@ app.set('view engine', 'jade');
 
 app.locals.title = 'MiniTwit';
 
+app.use(morgan('dev'));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('www'));
 app.use(sass({
   dest: 'www/styles',
@@ -25,10 +27,6 @@ app.use(sass({
   sourceMap: app.get('env') === 'production' ? 'false' : true,
   src: 'www/styles'
 }));
-
-app.use(morgan('dev'));
-
-app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/', routes);
 
