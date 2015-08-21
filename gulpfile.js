@@ -1,17 +1,15 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-var clean = require('gulp-clean');
 var del = require('del');
 
-gulp.task('styles', function() {
+gulp.task('styles', function () {
     gulp.src('www/**/*.scss')
         .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('./www/styles'));
 });
 
-
-gulp.task('default',function() {
-    gulp.watch('www/**/*.scss',['start-clean']);
+gulp.task('default',function () {
+  gulp.watch('www/**/*.scss',['start-clean']);
 });
 
 gulp.task('start-clean', function (cb) {
@@ -20,7 +18,4 @@ gulp.task('start-clean', function (cb) {
 
 gulp.task('clean', function () {
   gulp.start('start-clean');
-})
-
-
-
+});
