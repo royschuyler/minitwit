@@ -4,8 +4,6 @@
 var bodyParser = require('body-parser');
 var express = require('express');
 var morgan = require('morgan');
-var sass = require('node-sass-middleware');
-
 var routes = require('./routes');
 var database = require('../lib/mongo/');
 
@@ -26,13 +24,7 @@ app.locals.title = 'MiniTwit';
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static('www'));
-app.use(sass({
-  dest: 'www/styles',
-  outputStyle: 'compressed',
-  prefix: '/styles',
-  sourceMap: app.get('env') === 'production' ? 'false' : true,
-  src: 'www/styles'
-}));
+
 
 app.use('/', routes);
 
