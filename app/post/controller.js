@@ -15,3 +15,9 @@ module.exports.create = function (req, res) {
     res.redirect('/');
   });
 };
+
+module.exports.show = function (req, res) {
+  Post.findById(req.params.id, function (err, post) {
+    res.render('post/show', {post: post});
+  });
+};

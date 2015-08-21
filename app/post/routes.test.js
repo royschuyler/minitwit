@@ -8,6 +8,7 @@ var mongo = require('../../lib/mongo/');
 var Post = require('./post');
 
 describe('Post Routes', function () {
+  var seededPosts;
 
   before(function (done) {
     mongo.connect(function () {
@@ -16,7 +17,10 @@ describe('Post Routes', function () {
         {text: 'Bar'}
       ];
 
-      Post.collection.insertMany(seedPosts, done);
+      Post.collection.insertMany(seedPosts, function (err, result) {
+        seededPosts = result.ops;
+        done();
+      });
     });
   });
 
@@ -56,6 +60,31 @@ describe('Post Routes', function () {
             });
           });
       });
+    });
+  });
+
+  describe('GET /post/:id' , function () {
+    it('should show a specific post', function (done) {
+      var id1 = seededPosts[0]._id;
+      var id2 = seededPosts[1]._id;
+
+      request(app)
+        .get(`/post/${id1}`)
+        .expect(200)
+        .end(function (err, res) {
+          if (err) throw err;
+          expect(res.text).to.contain('Foo');
+
+          request(app)
+          .get(`/post/${id2}`)
+            .expect(200)
+            .end(function (err, res) {
+              if (err) throw err;
+              expect(res.text).to.contain('Bar');
+              done();
+            });
+        });
+
     });
   });
 });
