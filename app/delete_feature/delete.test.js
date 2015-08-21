@@ -2,19 +2,10 @@
 
 var expect = require('chai').expect;
 var request = require('supertest');
-var should = require('chai').should();
-
 
 var app = require('../../app/');
 var database = require('../../lib/mongo');
 var Post = require('../post/Post');
-
-
-describe('Mocha + Chai', function(){
-	it('Truthyness', function(){
-		true.should.equal(true);
-	});
-});
 
 
 describe('deleting', function(){
@@ -42,6 +33,7 @@ describe('deleting', function(){
     });
   });
 
+  //drop collections after tests
   after(function(done){
     database.connect(function(err, db){
       db.collection('users').drop(function(){
@@ -53,7 +45,6 @@ describe('deleting', function(){
   //  test route w/ correct authentication
   it('should respond with success', function(done){
     database.connect(function(err, db){
-      console.log(seededPosts[0]._id)
         request(app)
         .post('/delete/' + seededPosts[0]._id)
         .expect(200)
@@ -67,30 +58,32 @@ describe('deleting', function(){
 
 
   //  as userA deleting a tweet from userB profile
-	it('should not delete the tweet', function(done){
+	it('should not add hidden to the post', function(done){
     database.connect(function(err, db){
-    		request(app)
-    			.post('/delete/' + seededPosts[1]._id)
-    			.expect(200)
-    			.end(function (err, res){
-    				if (err) throw err;
-    				expect(res.text).to.contain('Error');
-    				done();
-    			});
+  		request(app)
+  			.post('/delete/' + seededPosts[1]._id)
+  			.expect(200)
+  			.end(function (err, res){
+  				if (err) throw err;
+  				expect(res.text).to.contain('Error');
+  				done();
+  			});
     })
   })
 
   //  as userA deleting a tweet from userA profile
-  it('should delete the tweet', function(done){
+  it('should add hidden to the post', function(done){
     database.connect(function(err, db){
-        request(app)
-          .post('/delete/' + seededPosts[0]._id)
-          .expect(200)
-          .end(function (err, res){
-            if (err) throw err;
-            expect(res.text).to.equal('{"ok":1,"nModified":1,"n":1}');
+      request(app)
+        .post('/delete/' + seededPosts[0]._id)
+        .expect(200)
+        .end(function (err, res){
+          if (err) throw err;
+          Post.findById(seededPosts[0]._id, function(err, post){
+            expect(post.hidden).to.equal(true);
             done();
-          });
+          })
+        });
     })
   })
 

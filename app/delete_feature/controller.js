@@ -10,7 +10,6 @@ module.exports.setHidden = function (req, res){
       // req.session.user.name = 'Greg';
       if(post.username === 'Greg'){
         db.collection('posts').update(post, {$set : {hidden : true}}, function(err, writeResult){
-          console.log(post);
           if (err){
             res.send(err);
           }else{
