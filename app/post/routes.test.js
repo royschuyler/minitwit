@@ -37,4 +37,25 @@ describe('Post Routes', function () {
         });
     });
   });
+
+  describe('POST /post' , function () {
+    it('should create a post', function (done) {
+      Post.count(function (err, count) {
+        expect(count).to.equal(2);
+
+        request(app)
+          .post('/post')
+          .field('text', 'Baz')
+          .expect(302)
+          .expect('Moved Temporarily. Redirecting to /')
+          .end(function (err) {
+            if (err) throw err;
+            Post.count(function (err, count) {
+              expect(count).to.equal(3);
+              done();
+            });
+          });
+      });
+    });
+  });
 });

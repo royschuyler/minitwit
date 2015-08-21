@@ -6,6 +6,6 @@ var router = express.Router();
 var ctrl = require('./controller');
 
 router.get('/', ctrl.index);
-router.post('/', ctrl.create);
+router.post('/post', ctrl.create);
 
 module.exports = router;
