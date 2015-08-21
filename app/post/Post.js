@@ -9,7 +9,6 @@ function Post(p) {
   this.text = p.text;
 }
 
-//this sets the collection property as a getter, so that every time it gets called it gets reset
 Object.defineProperty(Post, 'collection', {
   get: function () {
     return mongo.getDb().collection('posts');
@@ -30,7 +29,6 @@ Post.dropCollection = function (cb) {
 
 Post.findById = function (id, cb) {
   Post.collection.findOne({_id: ObjectID(id)}, function (err, post) {
-    // cb(err, post);
     cb(err, setPrototype(post));
   });
 };
@@ -50,15 +48,3 @@ module.exports = Post;
 function setPrototype(pojo) {
   return _.create(Post.prototype, pojo);
 }
-
-
-
-
-
-
-
-
-
-
-
-
