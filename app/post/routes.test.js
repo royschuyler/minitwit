@@ -5,7 +5,7 @@ var request = require('supertest');
 
 var app = require('../../app/');
 var mongo = require('../../lib/mongo/');
-var Post = require('./post');
+var Post = require('./Post');
 
 describe('Post Routes', function () {
   var seededPosts;
