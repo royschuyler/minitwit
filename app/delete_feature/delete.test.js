@@ -5,6 +5,7 @@ var request = require('supertest');
 
 var app = require('../../app/');
 var Post = require('../post/Post');
+var database = require('../../lib/mongo/');
 
 
 describe('deleting', function (){
@@ -14,10 +15,12 @@ describe('deleting', function (){
     var post = {
       text : 'HelloWorld'
     };
-    Post.collection.insert(post, function (err, data){
-        seededPost = data.ops;
-        done();
-      });
+    database.connect(function (){
+      Post.collection.insert(post, function (err, data){
+          seededPost = data.ops;
+          done();
+        });
+    });
   });
 
   //drop collections after tests
