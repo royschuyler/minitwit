@@ -31,7 +31,7 @@ describe('deleting', function (){
   //  test route
   it('should respond with success', function (done){
         request(app)
-        .post('/post/delete/' + seededPost[0]._id)
+        .delete('/post/' + seededPost[0]._id)
         .expect(200)
         .end(function (err) {
           if (err) throw err;
@@ -42,7 +42,7 @@ describe('deleting', function (){
   //  adding hidden to a post
   it('should add hidden to the post', function (done){
       request(app)
-        .post('/post/delete/' + seededPost[0]._id)
+        .delete('/post/' + seededPost[0]._id)
         .expect(200)
         .end(function (err){
           if (err) throw err;
