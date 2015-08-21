@@ -1,15 +1,14 @@
 'use strict';
 
-var expect = require('chai').expect
-  , request = require('supertest');
+var request = require('supertest');
 
-var app = require('../../app')
-  , database = require('../../lib/mongo');
+var app = require('../../app'),
+    database = require('../../lib/mongo');
 
 describe('Autocomplete', () => {
   describe('GET /mention', () => {
 
-    before((done) => { // add users to user collection in db
+    before(done => { // add users to user collection in db
       var users = [
         { name : 'world' },
         { name : 'work' },
@@ -19,7 +18,7 @@ describe('Autocomplete', () => {
         db.collection('user').drop( // but clear collection first
           () => {
             db.collection('user').insert( users ,
-              (err) => {
+              err => {
                 if(err) throw err;
                 done();
               });
@@ -27,18 +26,18 @@ describe('Autocomplete', () => {
       });
     });
 
-    it('should send an empty array when there\'s no query', (done) => {
+    it('should send an empty array when there\'s no query', done => {
       request(app)
         .get('/autocomplete/mention')
         .expect(200)
-        .end((err,res) => {
-          if(err) return done(err);
-          expect(res.body).to.eql([]);
+        .expect([])
+        .end(err => {
+          if(err) throw err;
           done();
         });
     });
 
-    it('should respond with json', (done) => {
+    it('should respond with json', done => {
       request(app)
         .get('/autocomplete/mention?pattern=wor')
         .set('Accept','application/json')
@@ -46,23 +45,21 @@ describe('Autocomplete', () => {
         .expect(200,done);
     });
 
-    it('should respond with matches and not with non-matches', (done) => {
+    it('should respond with matches and not with non-matches', done => {
       request(app)   // seeking matches for wor
         .get('/autocomplete/mention?pattern=wor')
         .expect(200)
-        .end((err, res) => {
-          if(err) return done(err);
-          expect(res.body).to.deep.equal([
-            {name: 'world'}, {name: 'work'}
-          ]);
+        .expect([ {name: 'world'}, {name: 'work'} ])
+        .end(err => {
+          if(err) throw err;
           done();
         });
     });
 
-    after((done) => {
+    after(done => {
       database.connect((err,db) => {
         db.collection('user').drop(
-          (err) => {
+          err => {
             if(err) throw err;
             done();
           });
