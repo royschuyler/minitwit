@@ -1,6 +1,10 @@
 extends ../templates/layout
 
 block content
-  form(action='/post',method='POST')
-    input(type="text" name="text")
-    input(type="submit")
+  form(action='/post', method='POST')
+    input(name='text')
+    input(type='submit')
+
+  ul
+    each post in posts
+      li= post.text
