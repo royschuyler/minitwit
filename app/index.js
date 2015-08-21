@@ -11,7 +11,13 @@ var bodyParser = require('body-parser');
 
 var app = module.exports = express();
 
-app.set('port', process.env.PORT || 3000);
+if (app.get('env') === 'test') {
+  // random port
+  app.set('port', 0);
+} else {
+  app.set('port', process.env.PORT || 3000);
+}
+
 app.set('views', __dirname);
 app.set('view engine', 'jade');
 
