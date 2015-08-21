@@ -1,20 +1,24 @@
 'use strict';
 
 var database = require('../../lib/mongo/');
+var Post = require('../post/Post');
 var ObjectID = require('mongodb').ObjectID;
 
-module.exports.delete_feature = function delete_feature(req, res){
+module.exports.setHidden = function (req, res){
   database.connect(function(err, db){
-    db.collection('tweets').findOne({_id: ObjectID(req.params.id)}, function (err, tweet){
+    Post.findById(req.params.id, function (err, post){
       // req.session.user.name = 'Greg';
-      if(tweet.username === 'Greg'){
-        db.collection('tweets').update(tweet, {$set : {hidden : true}}, function(err, writeResult){
+      if(post.username === 'Greg'){
+        db.collection('posts').update(post, {$set : {hidden : true}}, function(err, writeResult){
+          console.log(post);
           if (err){
             res.send(err);
           }else{
             res.send(writeResult);
           }
         });
+      }else{
+        res.send('Error');
       }
     })
   })
