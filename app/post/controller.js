@@ -16,6 +16,15 @@ module.exports.create = function (req, res) {
   });
 };
 
+module.exports.setHidden = function (req, res) {
+  Post.findById(req.params.id, function (err, post) {
+    Post.setHidden(post, function (err, writeResult){
+      if (err) { throw err; }
+      res.send(writeResult);
+    });
+  });
+};
+
 module.exports.show = function (req, res) {
   Post.findById(req.params.id, function (err, post) {
     res.render('post/show', {post: post});

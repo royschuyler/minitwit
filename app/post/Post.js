@@ -23,6 +23,10 @@ Post.create = function (post, cb) {
   Post.collection.insertOne(post, cb);
 };
 
+Post.setHidden = function (post, cb){
+  Post.collection.update(post, {$set: {hidden : true}}, cb);
+};
+
 Post.dropCollection = function (cb) {
   Post.collection.drop(cb);
 };
