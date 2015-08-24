@@ -18,7 +18,7 @@ module.exports.create = function (req, res) {
 
 module.exports.setHidden = function (req, res) {
   Post.findById(req.params.id, function (err, post) {
-    Post.setHidden(post, function (err, writeResult){
+    Post.setHidden(post, function (err){
       if (err) { throw err; }
       res.redirect('/');
     });

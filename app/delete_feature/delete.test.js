@@ -38,15 +38,15 @@ describe('deleting', function (){
           request(app)
             .get('/post/' + seededPost[0]._id)
             .expect(302)
-            .end(function(err){
+            .end(function (err){
               if (err) throw err;
               request(app)
                 .get('/')
-                .end(function(err, res){
+                .end(function (err, res){
                   expect(res.text).to.not.contain(seededPost[0].text);
                   done();
-                })
-            })
+                });
+            });
         });
     });
 });
