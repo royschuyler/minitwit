@@ -1,15 +1,17 @@
 nav(class="navbar navbar-default navbar-fixed-top")
-  div(class="navbar-left")
-    div(class="container")
+  div(class="container")
+    div(class="navbar-left")
       div(class="navbar-header")
         a(class="navbar-brand" href="#")
           @MeBro
-      div(id="navbar" class="navbar-collapse collapse")
+      div(id="navbar" class="navbar-left")
         ul(class="nav navbar-nav")
           li(class="active")
-            a(href="#") Home
+            a(class="glyphicon glyphicon-home" href="#")  Home
           li
-            a(href="#") Profile
-  div(class="navbar-right")
-     div(class="container-fluid")
-      button(class="btn btn-default navbar-btn") Sign Out
+            a(class="glyphicon glyphicon-bell" href="#")  Notifications
+          li
+            a(class="glyphicon glyphicon-envelope" href="#")  Messages
+    div(class="navbar-right")
+       div(class="container-fluid")
+        button(class="btn btn-default navbar-btn") Sign Out
