@@ -28,28 +28,25 @@ describe('deleting', function (){
       Post.dropCollection(done);
     });
 
-  //  test route
-  it('should respond with success', function (done){
-        request(app)
-        .delete('/post/' + seededPost[0]._id)
-        .expect(200)
-        .end(function (err) {
-          if (err) throw err;
-          done();
-        });
-      });
-
   //  adding hidden to a post
   it('should add hidden to the post', function (done){
       request(app)
         .delete('/post/' + seededPost[0]._id)
-        .expect(200)
+        .expect(302)
         .end(function (err){
           if (err) throw err;
-          Post.findById(seededPost[0]._id, function (err, post){
-            expect(post.hidden).to.equal(true);
-            done();
-          });
+          request(app)
+            .get('/post/' + seededPost[0]._id)
+            .expect(302)
+            .end(function(err){
+              if (err) throw err;
+              request(app)
+                .get('/')
+                .end(function(err, res){
+                  expect(res.text).to.not.contain(seededPost[0].text);
+                  done();
+                })
+            })
         });
     });
 });

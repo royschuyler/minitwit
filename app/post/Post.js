@@ -38,7 +38,7 @@ Post.findById = function (id, cb) {
 };
 
 Post.findAll = function (cb) {
-  Post.collection.find().toArray(function (err, posts) {
+  Post.collection.find({hidden : {$ne : true}}).toArray(function (err, posts) {
     var prototypedPosts = posts.map(function (post) {
       return setPrototype(post);
     });

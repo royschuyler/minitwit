@@ -20,13 +20,17 @@ module.exports.setHidden = function (req, res) {
   Post.findById(req.params.id, function (err, post) {
     Post.setHidden(post, function (err, writeResult){
       if (err) { throw err; }
-      res.send(writeResult);
+      res.redirect('/');
     });
   });
 };
 
 module.exports.show = function (req, res) {
   Post.findById(req.params.id, function (err, post) {
-    res.render('post/show', {post: post});
+    if(post.hidden){
+      res.redirect('/');
+    }else{
+      res.render('post/show', {post: post});
+    }
   });
 };
