@@ -24,7 +24,7 @@ Post.create = function (post, cb) {
 };
 
 Post.setHidden = function (post, cb){
-  Post.collection.update(post, {$set: {hidden : true}}, cb);
+  Post.collection.findOneAndUpdate(post, {$set: {hidden : true}}, {returnOriginal : false}, cb);
 };
 
 Post.dropCollection = function (cb) {

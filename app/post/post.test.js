@@ -83,8 +83,8 @@ describe('Post', function () {
 
   describe('.setHidden()', function (){
     it('should set the post to contain hidden : true', function (done){
-      Post.setHidden(seededPosts[0], function (err, writeResult){
-        expect(writeResult.result.nModified).to.equal(1);
+      Post.setHidden(seededPosts[0], function (err, result){
+        expect(result.value.hidden).to.equal(true);
         done();
       });
     });
