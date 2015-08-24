@@ -21,15 +21,5 @@ passport.use(new TwitterStrategy({
   consumerSecret: secrets.twitterAuth.consumerSecret,
   callbackURL: secrets.twitterAuth.callbackURL
 }, function (token, tokenSecret, profile, done) {
-  User.findByUserName(profile.username, function (err, user) {
-    if (err) {
-      return done(err);
-    }
-
-    if (user) {
-      return done(null, user);
-    } else {
-      User.create(profile, done);
-    }
-  });
+  User.findOrCreate(profile, done);
 }));

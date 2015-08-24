@@ -14,6 +14,20 @@ Object.defineProperty(User, 'collection', {
   }
 });
 
+User.findOrCreate = function (profile, cb) {
+  User.findByUserName(profile.username, function (err, user) {
+    if (err) {
+      return cb(err);
+    }
+
+    if (user) {
+      return cb(null, user);
+    } else {
+      User.create(profile, cb);
+    }
+  });
+}
+
 User.create = function (u, cb) {
   var user = new User(u);
 
