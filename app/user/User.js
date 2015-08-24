@@ -1,0 +1,39 @@
+'use strict';
+
+var _ = require('lodash');
+
+var mongo = require('../../lib/mongo/');
+
+function User(u) {
+  this._id = u.username;
+}
+
+Object.defineProperty(User, 'collection', {
+  get: function () {
+    return mongo.getDb().collection('users');
+  }
+});
+
+User.create = function (u, cb) {
+  var user = new User(u);
+
+  User.collection.insertOne(user, function (err) {
+    cb(err, user);
+  });
+};
+
+User.findByUserName = function (username, cb) {
+  User.collection.findOne({_id: username}, function (err, user) {
+    if (user) {
+      cb(err, setPrototype(user));
+    } else {
+      cb(err);
+    }
+  });
+};
+
+module.exports = User;
+
+function setPrototype(pojo) {
+  return _.create(User.prototype, pojo);
+}
