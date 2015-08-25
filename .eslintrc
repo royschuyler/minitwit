@@ -14,6 +14,7 @@ rules:
   comma-spacing: [2, {"before": false, "after": true}]
   comma-style: [2, last]
   eol-last: 2
+  handle-callback-err: [2, "^(err|error)$"]
   indent: [2, 2]
   no-multiple-empty-lines: 2
   no-trailing-spaces: 2
