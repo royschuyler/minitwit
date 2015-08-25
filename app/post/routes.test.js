@@ -62,6 +62,17 @@ describe('Post Routes', function () {
           });
       });
     });
+
+    it('should display the created post', function (done) {
+      request(app)
+        .get('/')
+        .expect(200)
+        .end(function (err, res) {
+          if (err) throw err;
+          expect(res.text).to.contain('Baz');
+          done();
+        });
+    });
   });
 
   describe('GET /post/:id' , function () {
