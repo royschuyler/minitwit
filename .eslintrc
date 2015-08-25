@@ -9,6 +9,7 @@ extends: eslint:recommended
 root: true
 
 rules:
+  brace-style: [2, 1tbs, { "allowSingleLine": false }]
   comma-dangle: [2, never]
   comma-style: [2, last]
   eol-last: 2
