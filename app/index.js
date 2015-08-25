@@ -7,7 +7,6 @@ var morgan = require('morgan');
 var sass = require('node-sass-middleware');
 
 var routes = require('./routes');
-
 var database = require('../lib/mongo/');
 
 var app = module.exports = express();
@@ -36,7 +35,6 @@ app.use(sass({
 }));
 
 app.use('/', routes);
-
 
 require('../lib/errorHandler/');
 

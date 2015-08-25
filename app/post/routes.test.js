@@ -10,7 +10,7 @@ var Post = require('./Post');
 describe('Post Routes', function () {
   var seededPosts;
 
-  before(function (done) {
+  beforeEach(function (done) {
     mongo.connect(function () {
       var seedPosts = [
         {text: 'Foo'},
@@ -24,7 +24,7 @@ describe('Post Routes', function () {
     });
   });
 
-  after(function (done) {
+  afterEach(function (done) {
     Post.dropCollection(done);
   });
 
@@ -38,6 +38,32 @@ describe('Post Routes', function () {
           expect(res.text).to.contain('Foo');
           expect(res.text).to.contain('Bar');
           done();
+        });
+    });
+
+    it('should remove the deleted post from the index', function (done){
+      request(app)
+        .get('/')
+        .expect(200)
+        .end(function (err, res){
+          if (err) throw err;
+          expect(res.text).to.contain(seededPosts[1].text);
+
+          request(app)
+            .delete('/post/' + seededPosts[1]._id)
+            .expect(302)
+            .end(function (err){
+              if (err) throw err;
+
+              request(app)
+                .get('/')
+                .expect(200)
+                .end(function (err, res){
+                  if (err) throw err;
+                  expect(res.text).to.not.contain(seededPosts[1].text);
+                  done();
+                });
+            });
         });
     });
   });
@@ -85,6 +111,35 @@ describe('Post Routes', function () {
             });
         });
 
+    });
+  });
+
+
+  describe('DELETE /post/:id', function (){
+    it('should send the user a 404 when trying to access a deleted post', function (done){
+      request(app)
+        .get('/post/' + seededPosts[1]._id)
+        .expect(200)
+        .end(function (err, res) {
+          if (err) throw err;
+          expect(res.text).to.contain('Foo');
+
+          request(app)
+            .delete('/post/' + seededPosts[1]._id)
+            .expect(302)
+            .end(function (err){
+              if (err) throw err;
+
+              request(app)
+                .get('/post/' + seededPosts[1]._id)
+                .expect(404)
+                .end(function (err, res){
+                  if (err) throw err;
+                  expect(res.text).to.equal('Post not found');
+                  done();
+                });
+            });
+        });
     });
   });
 });

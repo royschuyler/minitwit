@@ -28,7 +28,8 @@ module.exports.setHidden = function (req, res) {
 module.exports.show = function (req, res) {
   Post.findById(req.params.id, function (err, post) {
     if(post.hidden){
-      res.redirect('/');
+      res.status(404)
+        .send('Post not found');
     }else{
       res.render('post/show', {post: post});
     }
