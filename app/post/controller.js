@@ -25,11 +25,12 @@ module.exports.setHidden = function (req, res) {
   });
 };
 
-module.exports.show = function (req, res) {
+module.exports.show = function (req, res, next) {
   Post.findById(req.params.id, function (err, post) {
-    if(post.hidden){
-      res.status(404)
-        .send('Post not found');
+    if (post.hidden) {
+      var err = new Error('Not Found');
+      err.status = 404;
+      next(err);
     }else{
       res.render('post/show', {post: post});
     }

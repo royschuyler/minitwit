@@ -138,7 +138,7 @@ describe('Post Routes', function () {
                 .expect(404)
                 .end(function (err, res){
                   if (err) throw err;
-                  expect(res.text).to.equal('Post not found');
+                  expect(res.text).to.contain('Not Found');
                   done();
                 });
             });
