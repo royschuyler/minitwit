@@ -25,7 +25,7 @@ describe('User Routes', function () {
   });
 
   describe('GET /auth/twitter', function () {
-    it('should redirect to /', function (done) {
+    it('should redirect to twitter auth', function (done) {
       request(app)
         .get('/auth/twitter')
         .expect(302)
