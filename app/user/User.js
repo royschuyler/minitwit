@@ -46,13 +46,13 @@ User.findByUserName = function (username, cb) {
   });
 };
 
-User.findByPattern = (pattern,cb) => {
+User.findByPattern = (pattern, cb) => {
   this.collection.find({
     _id : {$regex:pattern}
   }, {
     _id : 1
-  }).toArray((err,matches) => {
-    cb(err,matches);
+  }).toArray((err, matches) => {
+    cb(err, matches);
   });
 };
 
