@@ -46,6 +46,14 @@ User.findByUserName = function (username, cb) {
   });
 };
 
+User.dropCollection = function (cb) {
+  User.collection.drop(cb);
+};
+
+User.count = function (cb) {
+  return User.collection.count(cb);
+};
+
 module.exports = User;
 
 function setPrototype(pojo) {
