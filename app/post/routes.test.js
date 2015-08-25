@@ -122,7 +122,7 @@ describe('Post Routes', function () {
         .expect(200)
         .end(function (err, res) {
           if (err) throw err;
-          expect(res.text).to.contain('Foo');
+          expect(res.text).to.contain(seededPosts[1].text);
 
           request(app)
             .delete('/post/' + seededPosts[1]._id)
