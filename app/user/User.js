@@ -26,7 +26,7 @@ User.findOrCreate = function (profile, cb) {
       User.create(profile, cb);
     }
   });
-}
+};
 
 User.create = function (u, cb) {
   var user = new User(u);
