@@ -75,6 +75,7 @@ describe('Post Routes', function () {
         .end(function (err, res) {
           if (err) throw err;
           expect(res.text).to.contain('Foo');
+          expect(res.text).to.not.contain('Bar');
 
           request(app)
           .get(`/post/${id2}`)
@@ -82,6 +83,7 @@ describe('Post Routes', function () {
             .end(function (err, res) {
               if (err) throw err;
               expect(res.text).to.contain('Bar');
+              expect(res.text).to.not.contain('Foo');
               done();
             });
         });
