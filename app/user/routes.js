@@ -11,7 +11,7 @@ router.get('/auth/twitter/cb', ctrl.authTwitterCb);
 router.get('/logout', ctrl.logout);
 router.get('/profile', isLoggedIn, ctrl.show);
 
-router.get('/search', ctrl.search);
+router.get('/user/search', ctrl.search);
 
 module.exports = router;
 
