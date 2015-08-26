@@ -80,7 +80,7 @@ describe('User Routes', () => {
 
       mongo.connect((err,db) => {
         db.collection('users').drop(() => {
-          db.collection('users').insert(users, (err, result) => {
+          db.collection('users').insert(users, err => {
             if(err) throw err;
             done();
           });
