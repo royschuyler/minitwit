@@ -71,17 +71,20 @@ describe('User Routes', () => {
 
   describe('GET /search', () => {
 
-    before(done => { // add users to user collection in db
+    before(done => {
       var users = [
         { _id : 'world' },
         { _id : 'work' },
         { _id : 'woman' }
       ];
 
-      mongo.connect((err,db) => {
-        db.collection('users').drop(() => {
+      mongo.connect((err, db) => {
+        if (err) throw err;
+        db.collection('users').drop(err => {
+          if (err) throw err;
+
           db.collection('users').insert(users, err => {
-            if(err) throw err;
+            if (err) throw err;
             done();
           });
         });
@@ -89,9 +92,11 @@ describe('User Routes', () => {
     });
 
     after(done => {
-      mongo.connect((err,db) => {
+      mongo.connect((err, db) => {
+        if (err) throw err;
+
         db.collection('users').drop(err => {
-          if(err) throw err;
+          if (err) throw err;
           done();
         });
       });
@@ -103,7 +108,7 @@ describe('User Routes', () => {
         .expect(200)
         .expect([])
         .end(err => {
-          if(err) throw err;
+          if (err) throw err;
           done();
         });
     });
@@ -111,22 +116,20 @@ describe('User Routes', () => {
     it('should respond with json', done => {
       request(app)
         .get('/user/search?pattern=wor')
-        .set('Accept','application/json')
-        .expect('Content-Type',/json/)
-        .expect(200,done);
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(200, done);
     });
 
     it('should respond with matches and not with non-matches', done => {
-      request(app)   // seeking matches for wor
+      request(app)
         .get('/user/search?pattern=wor')
         .expect(200)
-        .expect([ {_id: 'work'}, {_id: 'world'} ])
+        .expect([{_id: 'work'}, {_id: 'world'}])
         .end(err => {
-          if(err) throw err;
+          if (err) throw err;
           done();
         });
     });
-
   });
-
 });

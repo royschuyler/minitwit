@@ -23,9 +23,8 @@ module.exports.show = function (req, res) {
 module.exports.search = (req, res) => {
   var p = req.query.pattern;
 
-  User.findByPattern(p,
-    (err, matches) => {
-      if(err) throw err;
-      res.send(matches);
-    });
+  User.findByPattern(p, (err, matches) => {
+    if (err) throw err;
+    res.send(matches);
+  });
 };
