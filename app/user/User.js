@@ -47,7 +47,7 @@ User.findByUserName = function (username, cb) {
 };
 
 User.findByPattern = (pattern, cb) => {
-  this.collection.find({
+  User.collection.find({
     _id : {$regex:pattern}
   }, {
     _id : 1
