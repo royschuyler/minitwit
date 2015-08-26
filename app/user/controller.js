@@ -2,6 +2,8 @@
 
 var passport = require('passport');
 
+var User = require('./User');
+
 module.exports.authTwitter = passport.authenticate('twitter');
 
 module.exports.authTwitterCb = passport.authenticate('twitter', {
