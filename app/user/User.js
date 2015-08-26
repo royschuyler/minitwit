@@ -56,7 +56,9 @@ User.findByPattern = (pattern, cb) => {
   });
 };
 
-User.dropCollection = User.collection.drop;
+User.dropCollection = function(cb) {
+  User.collection.drop(cb);
+};
 
 User.count = function (cb) {
   return User.collection.count(cb);
