@@ -10,6 +10,7 @@ root: true
 
 rules:
   brace-style: [2, 1tbs, {"allowSingleLine": false}]
+  camelcase: 2
   comma-dangle: [2, never]
   comma-spacing: [2, {"before": false, "after": true}]
   comma-style: [2, last]
@@ -19,10 +20,10 @@ rules:
   newline-after-var: [1, never]
   no-multiple-empty-lines: 2
   no-trailing-spaces: 2
-  one-var: [2, {"uninitialized": "always", "initialized": "never"}]
+  one-var: [2, {uninitialized: always, initialized: never}]
   quotes: [2, single, avoid-escape]
   semi: [2, always]
-  space-before-function-paren: [2, {"anonymous": "always", "named": "never"}]
+  space-before-function-paren: [2, {anonymous: always, named: never}]
   space-in-parens: [2, always]
   strict: [2, global]
   yoda: [2, never]
