@@ -82,7 +82,6 @@ describe('User Routes', () => {
         db.collection('users').drop(() => {
           db.collection('users').insert(users, (err, result) => {
             if(err) throw err;
-            console.log(result.ops)
             done();
           });
         });

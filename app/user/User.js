@@ -56,7 +56,7 @@ User.findByPattern = (pattern, cb) => {
   });
 };
 
-User.dropCollection = function(cb) {
+User.dropCollection = function (cb) {
   User.collection.drop(cb);
 };
 
