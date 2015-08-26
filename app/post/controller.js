@@ -16,14 +16,10 @@ module.exports.create = function (req, res) {
   });
 };
 
-module.exports.setHidden = function (req, res) {
-  Post.findById(req.params.id, function (err, post) {
+module.exports.delete = function (req, res) {
+  Post.setHidden(req.params.id, function (err) {
     if (err) { throw err; }
-
-    Post.setHidden(post, function (err) {
-      if (err) { throw err; }
-      res.redirect('/');
-    });
+    res.redirect('/');
   });
 };
 

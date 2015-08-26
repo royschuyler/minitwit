@@ -94,10 +94,19 @@ describe('Post', function () {
 
   describe('.setHidden()', function (){
     it('should set the post to contain hidden : true', function (done) {
-      Post.setHidden(seededPosts[0], function (err, result) {
+      var id = seededPosts[0]._id;
+
+      Post.findById(id, function (err, post) {
         if (err) { throw err; }
-        expect(result.value.hidden).to.equal(true);
-        done();
+        expect(post.hidden).to.not.exist;
+
+        Post.setHidden(post._id, function (err, result) {
+          if (err) { throw err; }
+
+          post.hidden = true;
+          expect(result.value).to.deep.equal(post);
+          done();
+        });
       });
     });
   });
