@@ -18,6 +18,7 @@ describe('Post Routes', function () {
       ];
 
       Post.collection.insertMany(seedPosts, function (err, result) {
+        if (err) { throw err; }
         seededPosts = result.ops;
         done();
       });
@@ -42,9 +43,10 @@ describe('Post Routes', function () {
     });
   });
 
-  describe('POST /post' , function () {
+  describe('POST /post', function () {
     it('should create a post', function (done) {
       Post.count(function (err, count) {
+        if (err) { throw err; }
         expect(count).to.equal(2);
 
         request(app)
@@ -55,7 +57,9 @@ describe('Post Routes', function () {
           .expect('Moved Temporarily. Redirecting to /')
           .end(function (err) {
             if (err) throw err;
+
             Post.count(function (err, count) {
+              if (err) { throw err; }
               expect(count).to.equal(3);
               done();
             });
@@ -75,7 +79,7 @@ describe('Post Routes', function () {
     });
   });
 
-  describe('GET /post/:id' , function () {
+  describe('GET /post/:id', function () {
     it('should show a specific post', function (done) {
       var id1 = seededPosts[0]._id;
       var id2 = seededPosts[1]._id;
@@ -98,7 +102,6 @@ describe('Post Routes', function () {
               done();
             });
         });
-
     });
   });
 });

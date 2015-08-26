@@ -18,6 +18,7 @@ module.exports.create = function (req, res) {
 
 module.exports.show = function (req, res) {
   Post.findById(req.params.id, function (err, post) {
+    if (err) { throw err; }
     res.render('post/show', {post: post});
   });
 };
