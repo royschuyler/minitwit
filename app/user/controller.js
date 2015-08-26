@@ -21,9 +21,9 @@ module.exports.show = function (req, res) {
 };
 
 module.exports.search = (req, res) => {
-  var p = req.query.pattern;
+  var pattern = req.query.pattern;
 
-  User.findByPattern(p, (err, matches) => {
+  User.findByPattern(pattern, (err, matches) => {
     if (err) throw err;
     res.send(matches);
   });

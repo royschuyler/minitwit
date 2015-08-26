@@ -5,6 +5,7 @@ var request = require('supertest');
 
 var app = require('../../app/');
 var mongo = require('../../lib/mongo');
+var User = require('./User');
 
 describe('User Routes', () => {
   describe('GET /logout', function () {
@@ -80,56 +81,25 @@ describe('User Routes', () => {
 
       mongo.connect((err, db) => {
         if (err) throw err;
-        db.collection('users').drop(err => {
-          if (err) throw err;
-
-          db.collection('users').insert(users, err => {
-            if (err) throw err;
-            done();
-          });
-        });
+        db.collection('users').insertMany(users, done);
       });
     });
 
-    after(done => {
-      mongo.connect((err, db) => {
-        if (err) throw err;
-
-        db.collection('users').drop(err => {
-          if (err) throw err;
-          done();
-        });
-      });
-    });
+    after(User.dropCollection);
 
     it('should send an empty array when there\'s no query', done => {
       request(app)
         .get('/user/search')
-        .expect(200)
-        .expect([])
-        .end(err => {
-          if (err) throw err;
-          done();
-        });
-    });
-
-    it('should respond with json', done => {
-      request(app)
-        .get('/user/search?pattern=wor')
-        .set('Accept', 'application/json')
         .expect('Content-Type', /json/)
-        .expect(200, done);
+        .expect(200)
+        .expect([], done);
     });
 
     it('should respond with matches and not with non-matches', done => {
       request(app)
         .get('/user/search?pattern=wor')
         .expect(200)
-        .expect([{_id: 'work'}, {_id: 'world'}])
-        .end(err => {
-          if (err) throw err;
-          done();
-        });
+        .expect([{_id: 'work'}, {_id: 'world'}], done);
     });
   });
 });
