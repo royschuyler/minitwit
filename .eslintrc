@@ -9,13 +9,13 @@ extends: eslint:recommended
 root: true
 
 rules:
-  brace-style: [2, 1tbs, {"allowSingleLine": false}]
+  brace-style: [2, 1tbs, {allowSingleLine: false}]
   camelcase: 2
   comma-dangle: [2, never]
-  comma-spacing: [2, {"before": false, "after": true}]
+  comma-spacing: [2, {before: false, after: true}]
   comma-style: [2, last]
   eol-last: 2
-  handle-callback-err: [2, "^(err|error)$"]
+  handle-callback-err: [2, ^(err|error)$]
   indent: [2, 2]
   newline-after-var: [1, never]
   no-multiple-empty-lines: 2
