@@ -18,6 +18,7 @@ describe('Post Routes', function () {
       ];
 
       Post.collection.insertMany(seedPosts, function (err, result) {
+        if (err) { throw err; }
         seededPosts = result.ops;
         done();
       });
@@ -42,28 +43,43 @@ describe('Post Routes', function () {
     });
   });
 
-  describe('POST /post' , function () {
+  describe('POST /post', function () {
     it('should create a post', function (done) {
       Post.count(function (err, count) {
+        if (err) { throw err; }
         expect(count).to.equal(2);
 
         request(app)
           .post('/post')
-          .field('text', 'Baz')
+          .type('form')
+          .send({text: 'Baz'})
           .expect(302)
           .expect('Moved Temporarily. Redirecting to /')
           .end(function (err) {
             if (err) throw err;
+
             Post.count(function (err, count) {
+              if (err) { throw err; }
               expect(count).to.equal(3);
               done();
             });
           });
       });
     });
+
+    it('should display the created post', function (done) {
+      request(app)
+        .get('/')
+        .expect(200)
+        .end(function (err, res) {
+          if (err) throw err;
+          expect(res.text).to.contain('Baz');
+          done();
+        });
+    });
   });
 
-  describe('GET /post/:id' , function () {
+  describe('GET /post/:id', function () {
     it('should show a specific post', function (done) {
       var id1 = seededPosts[0]._id;
       var id2 = seededPosts[1]._id;
@@ -74,6 +90,7 @@ describe('Post Routes', function () {
         .end(function (err, res) {
           if (err) throw err;
           expect(res.text).to.contain('Foo');
+          expect(res.text).to.not.contain('Bar');
 
           request(app)
           .get(`/post/${id2}`)
@@ -81,10 +98,10 @@ describe('Post Routes', function () {
             .end(function (err, res) {
               if (err) throw err;
               expect(res.text).to.contain('Bar');
+              expect(res.text).to.not.contain('Foo');
               done();
             });
         });
-
     });
   });
 

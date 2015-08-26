@@ -18,7 +18,9 @@ module.exports.create = function (req, res) {
 
 module.exports.setHidden = function (req, res) {
   Post.findById(req.params.id, function (err, post) {
-    Post.setHidden(post, function (err){
+    if (err) { throw err; }
+
+    Post.setHidden(post, function (err) {
       if (err) { throw err; }
       res.redirect('/');
     });
@@ -27,11 +29,13 @@ module.exports.setHidden = function (req, res) {
 
 module.exports.show = function (req, res, next) {
   Post.findById(req.params.id, function (err, post) {
+    if (err) { throw err; }
+
     if (post.hidden) {
       err = new Error('Not Found');
       err.status = 404;
       next(err);
-    }else{
+    } else {
       res.render('post/show', {post: post});
     }
   });
