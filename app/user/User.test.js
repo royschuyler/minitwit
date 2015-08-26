@@ -104,4 +104,31 @@ describe('User', function () {
       });
     });
   });
+
+  describe('.findByPattern()', () => {
+
+    it('should return an array', done => {
+      User.findByPattern('any pattern',
+        (err,matches) => {
+          if(err) throw err;
+          expect(matches).to.be.an('array');
+          done();
+        });
+    });
+
+    it('should should respond with matches', done => {
+      User.findByPattern('ba',
+        (err, matches) => {
+          if(err) throw err;
+          expect(matches).to.deep.equal([
+            { _id : 'bar' },
+            { _id : 'baz' }
+          ]);
+          done();
+        });
+    });
+
+  });
+
+
 });
