@@ -4,8 +4,9 @@ var expect = require('chai').expect;
 var request = require('supertest');
 
 var app = require('../../app/');
+var mongo = require('../../lib/mongo');
 
-describe('User Routes', function () {
+describe('User Routes', () => {
   describe('GET /logout', function () {
     it('should redirect to /', function (done) {
       request(app)
@@ -67,4 +68,66 @@ describe('User Routes', function () {
         });
     });
   });
+
+  describe('GET /search', () => {
+
+    before(done => { // add users to user collection in db
+      var users = [
+        { _id : 'world' },
+        { _id : 'work' },
+        { _id : 'woman' }
+      ];
+
+      mongo.connect((err,db) => {
+        db.collection('users').drop(() => {
+          db.collection('users').insert(users, (err, result) => {
+            if(err) throw err;
+            console.log(result.ops)
+            done();
+          });
+        });
+      });
+    });
+
+    after(done => {
+      mongo.connect((err,db) => {
+        db.collection('users').drop(err => {
+          if(err) throw err;
+          done();
+        });
+      });
+    });
+
+    it('should send an empty array when there\'s no query', done => {
+      request(app)
+        .get('/user/search')
+        .expect(200)
+        .expect([])
+        .end(err => {
+          if(err) throw err;
+          done();
+        });
+    });
+
+    it('should respond with json', done => {
+      request(app)
+        .get('/user/search?pattern=wor')
+        .set('Accept','application/json')
+        .expect('Content-Type',/json/)
+        .expect(200,done);
+    });
+
+    it('should respond with matches and not with non-matches', done => {
+      request(app)   // seeking matches for wor
+        .get('/user/search?pattern=wor')
+        .expect(200)
+        .expect([ {_id: 'work'}, {_id: 'world'} ])
+        .end(err => {
+          if(err) throw err;
+          done();
+        });
+    });
+
+  });
+
 });
