@@ -92,8 +92,8 @@ describe('Post', function () {
     });
   });
 
-  describe('.setHidden()', function (){
-    it('should set the post to contain hidden : true', function (done) {
+  describe('.setHidden()', function () {
+    it('should set the post to contain hidden: true', function (done) {
       var id = seededPosts[0]._id;
 
       Post.findById(id, function (err, post) {

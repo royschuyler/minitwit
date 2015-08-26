@@ -23,6 +23,7 @@ rules:
   one-var: [2, {uninitialized: always, initialized: never}]
   quotes: [2, single, avoid-escape]
   semi: [2, always]
+  space-before-blocks: 2
   space-before-function-paren: [2, {anonymous: always, named: never}]
   space-in-parens: [2, never]
   strict: [2, global]

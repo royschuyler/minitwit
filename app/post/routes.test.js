@@ -112,20 +112,20 @@ describe('Post Routes', function () {
       request(app)
         .get('/')
         .expect(200)
-        .end(function (err, res){
+        .end(function (err, res) {
           if (err) throw err;
           expect(res.text).to.contain(post.text);
 
           request(app)
             .delete(`/post/${post._id}`)
             .expect(302)
-            .end(function (err){
+            .end(function (err) {
               if (err) throw err;
 
               request(app)
                 .get('/')
                 .expect(200)
-                .end(function (err, res){
+                .end(function (err, res) {
                   if (err) throw err;
                   expect(res.text).to.not.contain(post.text);
                   done();
@@ -147,13 +147,13 @@ describe('Post Routes', function () {
           request(app)
             .delete(`/post/${post._id}`)
             .expect(302)
-            .end(function (err){
+            .end(function (err) {
               if (err) throw err;
 
               request(app)
                 .get(`/post/${post._id}`)
                 .expect(404)
-                .end(function (err, res){
+                .end(function (err, res) {
                   if (err) throw err;
                   expect(res.text).to.contain('Not Found');
                   done();
