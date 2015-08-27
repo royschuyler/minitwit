@@ -33,7 +33,6 @@ app.use(sass({
   src: 'www/styles'
 }));
 
-
 app.use('/', routes);
 
 require('../lib/errorHandler/');

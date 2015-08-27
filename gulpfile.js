@@ -1,8 +1,8 @@
+var del = require('del');
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-var del = require('del');
 
-gulp.task('watch',function () {
+gulp.task('watch', ['clean', 'styles'], function () {
   gulp.watch('www/**/*.scss',['clean', 'styles']);
 });
 
